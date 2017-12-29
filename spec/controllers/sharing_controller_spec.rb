@@ -29,7 +29,7 @@ describe SharingController do
          stub_request(:patch, "#{EVERCAM_API}cameras/#{camera.exid}.json").
             to_return(:status => 200, :body => "", :headers => {})
 
-         post :update_camera, parameters.merge(credentials), {user: owner.email}
+         post :update_camera, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -42,7 +42,7 @@ describe SharingController do
             to_return(:status => 404, :body => "", :headers => {})
 
          parameters[:id]  = "blah"
-         post :update_camera, parameters.merge(credentials), {user: owner.email}
+         post :update_camera, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -57,7 +57,7 @@ describe SharingController do
             to_return(:status => 403, :body => "", :headers => {})
 
          parameters[:id]  = other_camera.exid
-         post :update_camera, parameters.merge(credentials), {user: owner.email}
+         post :update_camera, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -69,7 +69,7 @@ describe SharingController do
       it "returns failure if a public parameter is not specified" do
         pending
          parameters.delete(:public)
-         post :update_camera, parameters.merge(credentials), {user: owner.email}
+         post :update_camera, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -81,7 +81,7 @@ describe SharingController do
       it "returns failure if a discoverable parameter is not specified" do
         pending
          parameters.delete(:discoverable)
-         post :update_camera, parameters.merge(credentials), {user: owner.email}
+         post :update_camera, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -118,7 +118,7 @@ describe SharingController do
       it 'returns failure if a camera_id is not specified' do
         pending
          parameters.delete(:camera_id)
-         delete :delete, parameters.merge(credentials), {user: owner.email}
+         delete :delete, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -130,7 +130,7 @@ describe SharingController do
       it 'returns failure if a share_id is not specified' do
         pending
          parameters.delete(:share_id)
-         delete :delete, parameters.merge(credentials), {user: owner.email}
+         delete :delete, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -144,7 +144,7 @@ describe SharingController do
          stub_request(:delete, "#{EVERCAM_API}cameras/#{camera.exid}/shares.json?api_id=#{owner.api_id}&api_key=#{owner.api_key}").
             to_return(:status => 403, :body => "", :headers => {})
 
-         delete :delete, parameters.merge(credentials), {user: owner.email}
+         delete :delete, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -158,7 +158,7 @@ describe SharingController do
          stub_request(:delete, "#{EVERCAM_API}cameras/#{camera.exid}/shares.json?api_id=#{owner.api_id}&api_key=#{owner.api_key}").
             to_return(:status => 200, :body => "", :headers => {})
 
-         delete :delete, parameters.merge(credentials), {user: owner.email}
+         delete :delete, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -198,7 +198,7 @@ describe SharingController do
       it 'returns failure if a camera_id is not specified' do
         pending
          parameters.delete(:camera_id)
-         post :create, parameters.merge(credentials), {user: owner.email}
+         post :create, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -210,7 +210,7 @@ describe SharingController do
       it 'returns failure if an email address is not specified' do
         pending
          parameters.delete(:email)
-         post :create, parameters.merge(credentials), {user: owner.email}
+         post :create, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -222,7 +222,7 @@ describe SharingController do
       it 'returns failure if a permissions setting is not specified' do
         pending
          parameters.delete(:permissions)
-         post :create, parameters.merge(credentials), {user: owner.email}
+         post :create, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -240,7 +240,7 @@ describe SharingController do
          stub_request(:get, "#{EVERCAM_API}cameras/#{camera.exid}/snapshot.jpg?api_id=#{owner.api_id}&api_key=#{owner.api_key}").
            to_return(:status => 200, :body => '{"data" : ""}', :headers => {})
 
-         post :create, parameters.merge(credentials), {user: owner.email}
+         post :create, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -258,7 +258,7 @@ describe SharingController do
          stub_request(:get, "#{EVERCAM_API}cameras/#{camera.exid}/snapshot.jpg?api_id=#{owner.api_id}&api_key=#{owner.api_key}").
            to_return(:status => 200, :body => '{"data" : ""}', :headers => {})
 
-         post :create, parameters.merge(credentials), {user: owner.email}
+         post :create, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -303,7 +303,7 @@ describe SharingController do
             with(:body => {"api_id"=>owner.api_id, "api_key"=>owner.api_key, "rights"=>"list,snapshot,grant~snapshot,view,grant~view,edit,grant~edit,grant~list"}).
             to_return(:status => 200, :body => "", :headers => {})
 
-         patch :update_share, parameters.merge(credentials), {user: owner.email}
+         patch :update_share, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -316,7 +316,7 @@ describe SharingController do
             with(:body => {"api_id"=>owner.api_id, "api_key"=>owner.api_key, "rights"=>"list,snapshot,grant~snapshot,view,grant~view,edit,grant~edit,grant~list"}).
             to_return(:status => 403, :body => '{"message": "Unauthorized"}', :headers => {})
 
-         patch :update_share, parameters.merge(credentials), {user: owner.email}
+         patch :update_share, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)
@@ -328,7 +328,7 @@ describe SharingController do
       it 'returns failure if permissions are not specified' do
         pending
          parameters.delete(:permissions)
-         patch :update_share, parameters.merge(credentials), {user: owner.email}
+         patch :update_share, params: parameters.merge(credentials), {user: owner.email}
          expect(response.status).to eq(200)
          output = JSON.parse(response.body)
          expect(output.include?("success")).to eq(true)

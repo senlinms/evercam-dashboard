@@ -140,7 +140,7 @@ describe CamerasController do
           to_return(status: 200, headers: {}, body: "{\"cameras\": []}")
 
         session['user'] = user.email
-        post :create, full_params
+        post :create, params: full_params
         expect(response.status).to eq(302)
         expect(response).to redirect_to cameras_single_path(params['camera-id'])
       end
@@ -156,7 +156,7 @@ describe CamerasController do
           to_return(:status => 500, :body => '{"message":"error"', :headers => {})
 
         session['user'] = user.email
-        post :create, full_params
+        post :create, params: full_params
         expect(response.status).to eq(302)
         expect(response).to redirect_to cameras_single_path(params['camera-id'])
       end
@@ -178,7 +178,7 @@ describe CamerasController do
           to_return(:status => 200, :body => "", :headers => {})
 
         session['user'] = user.email
-        post :update, patch_params
+        post :update, params: patch_params
         expect(response.status).to eq(302)
         expect(response).to redirect_to "#{cameras_single_path(camera.exid)}/details"
         expect(flash[:message]).to eq('Settings updated successfully')

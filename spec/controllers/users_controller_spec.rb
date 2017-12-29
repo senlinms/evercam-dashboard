@@ -142,7 +142,7 @@ describe UsersController do
                to_return(:status => 200, :body => '{"users": [{}]}', :headers => {})
 
         session['user'] = params[:user][:email]
-        post :settings_update, patch_params
+        post :settings_update, params: patch_params
         expect(response.status).to eq(302)
         expect(response).to redirect_to user_settings_path(user.username)
         expect(flash[:message]).to eq('Settings updated successfully')
