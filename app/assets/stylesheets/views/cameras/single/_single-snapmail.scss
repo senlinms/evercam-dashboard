@@ -156,7 +156,8 @@
     color: $grey;
     float: left;
     margin-right: 5px;
-    width: 45px;
+    width: 40px;
+    margin-top: 1px;
   }
   .div-snapmail-values {
     float: left;
@@ -189,8 +190,8 @@
     width: 100%;
   }
 
-  .margin-top-4 {
-    margin-top: 4px;
+  .margin-top-5 {
+    margin-top: 5px;
   }
 
   .delete-snapmail {
@@ -258,6 +259,10 @@
     box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
     transition-delay: 0s;
   }
+}
+
+.font-16 {
+  font-size: 16px;
 }
 
 .snapmail .error-border {
