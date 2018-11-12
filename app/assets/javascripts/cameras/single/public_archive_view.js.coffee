@@ -113,11 +113,32 @@ handleResize = ->
 
 download_file = ->
   $(".download-animation").on "click", ->
+    type = Evercam.Archive.type
+    from = moment(Evercam.Archive.from_date*1000).format('MMDDYYYY-HHmmss')
+    to = moment(Evercam.Archive.to_date*1000).format('MMDDYYYY-HHmmss')
+    camera_name = Evercam.Archive.camera_id.replace(/ /g, "-")
+    if type is "edit"
+      file_name = "Evercam-Snapshot-#{camera_name}-#{from}"
+    else if type is "compare"
+      file_name = "Evercam-Compare-#{camera_name}-From-#{from}-To-#{to}"
+    else if type is "clip"
+      file_name = "Evercam-Clip-#{camera_name}-From-#{from}-To-#{to}"
+    else
+      file_name = "Evercam-File-#{camera_name}-From-#{from}-To-#{to}"
     NProgress.start()
-    download("#{$("#download_url").val()}")
-    setTimeout( ->
-      NProgress.done()
-    , 4000)
+
+    download_archive("#{$("#download_url").val()}", file_name)
+
+download_archive = (url, name, opts) ->
+  xhr = new XMLHttpRequest()
+  xhr.open('GET', url)
+  xhr.responseType = 'blob'
+  xhr.onload = ->
+    saveAs(xhr.response, name, opts)
+    NProgress.done()
+  xhr.onerror = ->
+    console.error('could not download file')
+  xhr.send()
 
 onShare = ->
   $("#on_share"). on "click", ->
