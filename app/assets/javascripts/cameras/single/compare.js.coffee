@@ -54,7 +54,7 @@ getFirstLastImages = (image_id, query_string, reload, setDate) ->
         $('#calendar-after').datetimepicker({value: date_after, maxDate: string_after_date, yearEnd: after_year})
       initCompare() if reload
     else
-      Notification.show("No image found")
+      Notification.error("No image found")
 
   settings =
     cache: false
@@ -239,9 +239,8 @@ setCompareEmbedCodeTitle = ->
       $('#export-compare-modal').modal 'show'
     else
       e.stopPropagation()
-      $(".bb-alert").removeClass("alert-info").addClass("alert-danger")
       $(".bb-alert").css "width", "410px"
-      Notification.show("Unable to export compare, before/after image is not available.")
+      Notification.warning("Unable to export compare, before/after image is not available.")
 
 export_compare = ->
   $("#export_compare_button").on "click", ->

@@ -81,11 +81,11 @@ handleAddToMyCameras = ->
       permissions: "minimal"
 
     onError = (jqXHR, status, error) ->
-      Notification.show("Failed to add camera.")
+      Notification.error("Failed to add camera.")
 
     onSuccess = (data, status, jqXHR) ->
       if data.success
-        Notification.show("Camera successfully added.")
+        Notification.info("Camera successfully added.")
         window.location = "/v1/cameras/#{Evercam.Camera.id}"
       else
         message = "Adding a camera share failed."
@@ -102,7 +102,7 @@ handleAddToMyCameras = ->
             message = "Invalid rights specified for share creation request."
           else
             message = data.message
-        Notification.show(message)
+        Notification.error(message)
 
     settings =
       cache: false

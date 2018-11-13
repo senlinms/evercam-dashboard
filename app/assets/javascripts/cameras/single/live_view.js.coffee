@@ -46,7 +46,7 @@ refreshCameraStatus = ->
 
   onError = (jqXHR, status, error) ->
     message = jqXHR.responseJSON.message
-    Notification.show message
+    Notification.error message
     hidegif()
     NProgress.done()
 
@@ -201,7 +201,9 @@ handleTabOpen = ->
 
 handleSaveSnapshot = ->
   $('#save-live-snapshot').on 'click', ->
-    download($("#live-player-image").attr('src'), "#{Evercam.Camera.id}-#{moment().toISOString()}.jpg", "image/jpg")
+    blob = base64ToBlob($("#live-player-image").attr('src'))
+    saveAs(blob, "#{Evercam.Camera.id}-#{moment().toISOString()}.jpg")
+    # download($("#live-player-image").attr('src'), "#{Evercam.Camera.id}-#{moment().toISOString()}.jpg", "image/jpg")
 
 getImageRealRatio = ->
   $('<img/>').attr('src', $("#live-player-image").attr('src')).load ->
@@ -401,14 +403,14 @@ deletePtzPreset = (token_value,type) ->
   data = {}
 
   onError = (jqXHR, status, error) ->
-    Notification.show("Something went wrong, Please try again.")
+    Notification.error("Something went wrong, Please try again.")
 
   onSuccess = (data, status, jqXHR) ->
     if type is 1
       token_name = $("#edit-preset input").val()
       createPtzPresets(token_name)
     else
-      Notification.show("Preset Deleted Successfully.")
+      Notification.info("Preset Deleted Successfully.")
       refreshPresetList()
 
   settings =
@@ -452,11 +454,11 @@ createPtzPresets = (preset_name) ->
 
   onError = (jqXHR, status, error) ->
     message = jqXHR.responseJSON.message
-    Notification.show message
+    Notification.error message
     NProgress.done()
 
   onSuccess = (data, status, jqXHR) ->
-    Notification.show "Preset Added Successfully"
+    Notification.info "Preset Added Successfully"
     refreshPresetList()
 
   settings =

@@ -84,3 +84,4 @@
 //= require cameras_table
 //= require snapmails/snapmails.js
 //= require moment-timezone.js
+//= require util.js
