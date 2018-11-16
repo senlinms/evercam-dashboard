@@ -34,7 +34,6 @@
 //= require swfobject.js
 //= require phoenix
 //= require fullcalendar
-//= require download.js
 //= require lib/underscore-min.js
 //= require bs-slider
 //= require old_browsers_alert.js

@@ -13,19 +13,9 @@
 #= require cameras/single/timelapse.js.coffee
 #= require cameras/single/compare.js.coffee
 #= require cameras/single/image_editor.js.coffee
-#= require saveimage.js
 #= require jquery.thumbhover.js
 #= require jquery.images-compare.js
 #= require cameras/single/nvr_recording.js.coffee
-#= require downloadjs
-
-window.sendAJAXRequest = (settings) ->
-  token = $('meta[name="csrf-token"]')
-  if token.size() > 0
-    headers =
-      "X-CSRF-Token": token.attr("content")
-    settings.headers = headers
-  xhrRequestChangeMonth = $.ajax(settings)
 
 initializeiCheck = ->
   $("input[type=radio]").iCheck
@@ -228,7 +218,6 @@ window.initializeCameraSingle = ->
   Metronic.init()
   Layout.init()
   QuickSidebar.init()
-  SaveImage.init()
   readOnlyCameraDeleteOption()
   showDurationError()
   liveViewMenuDisplay()

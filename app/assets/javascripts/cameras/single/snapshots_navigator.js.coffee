@@ -30,17 +30,6 @@ fist_image_date = null
 status_flag = true
 mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
-showFeedback = (message) ->
-  Notification.show(message)
-
-sendAJAXRequest = (settings) ->
-  token = $('meta[name="csrf-token"]')
-  if token.size() > 0
-    headers =
-      "X-CSRF-Token": token.attr("content")
-    settings.headers = headers
-  xhrRequestChangeMonth = $.ajax(settings)
-
 initDatePicker = ->
   $("#ui_date_picker_inline").datepicker().on("changeDate", datePickerSelect).on "changeMonth", datePickerChange
 
@@ -110,7 +99,7 @@ walkDaysInMonth = (year, month) ->
     type: 'GET'
     url: "#{Evercam.MEDIA_API_URL}cameras/#{Evercam.Camera.id}/recordings/snapshots/#{year}/#{month}/days"
 
-  sendAJAXRequest(settings)
+  xhrRequestChangeMonth = sendAJAXRequest(settings)
 
 datePickerSelect = (value)->
   dt = value.date

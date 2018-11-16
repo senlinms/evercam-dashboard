@@ -5,15 +5,6 @@ port = null
 rtsp_port = null
 flag = true
 
-sendAJAXRequest = (settings) ->
-  token = $('meta[name="csrf-token"]')
-  if token.size() > 0
-    headers =
-      "X-CSRF-Token": token.attr("content")
-    settings.headers = headers
-  xhrRequestChangeMonth = jQuery.ajax(settings)
-  true
-
 showSharingTab = ->
   $('.nav-tabs a[href=#sharing]').tab('show');
   setTimeout(->

@@ -1,3 +1,22 @@
+/**
+ * util.js
+ * @author Azhar Malik. Evercam Development Team <support@evercam.io>
+ * @everc
+ */
+'use strict';
+
+function sendAJAXRequest(settings) {
+  var headers, token;
+  token = $('meta[name="csrf-token"]');
+  if (token.size() > 0) {
+    headers = {
+      "X-CSRF-Token": token.attr("content")
+    };
+    settings.headers = headers;
+  }
+  return $.ajax(settings);
+}
+
 function base64ToBlob(data) {
   var mimeString = '';
   var raw, uInt8Array, i, rawLength;
@@ -17,4 +36,11 @@ function base64ToBlob(data) {
   }
 
   return new Blob([uInt8Array], {type: mimeString});
+}
+
+function copyToClipboard(element) {
+  var clipboard = new Clipboard(element);
+  return clipboard.on('success', function(e) {
+    Notification.info('Copied!');
+  });
 }

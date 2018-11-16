@@ -11,14 +11,6 @@ timoutWarning = 120000
 warningTimer = undefined
 timeoutTimer = undefined
 
-sendAJAXRequest = (settings) ->
-  token = $('meta[name="csrf-token"]')
-  if token.size() > 0
-    headers =
-      "X-CSRF-Token": token.attr("content"),
-    settings.headers = headers
-  xhrRequestChangeMonth = $.ajax(settings)
-
 controlButtonEvents = ->
   $(".play-pause").on "click", ->
     if stream_paused

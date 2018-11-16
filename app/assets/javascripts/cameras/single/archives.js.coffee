@@ -13,15 +13,7 @@ is_reload = true
 is_list_view = true
 pagination = false
 archive_id_from_url = null
-xhrRequestChangeMonth = null
-
-sendAJAXRequest = (settings) ->
-  token = $('meta[name="csrf-token"]')
-  if token.size() > 0
-    headers =
-      "X-CSRF-Token": token.attr("content")
-    settings.headers = headers
-  xhrRequestChangeMonth = $.ajax(settings)
+xhrRequest = null
 
 isUnauthorized = (response) ->
   if response.responseText.indexOf("/v1/users/signin") isnt -1
@@ -103,7 +95,7 @@ table_init_complete = (archives) ->
     pagination = true
 
 load_archive_view_by_id = (archives) ->
-  if archive_id_from_url
+  if archive_id_from_url && archives.length > 0
     archive = search_by_id(archives, archive_id_from_url)
     $("#archive_url_link_#{archive_id}").click()
     archive_id_from_url = null
@@ -504,7 +496,7 @@ makePublic = ->
     is_checked = $(this)
     id = $(this).attr('alt')
     typeArchive = $(this).attr('archive_type')
-    xhrRequestChangeMonth.abort() if xhrRequestChangeMonth
+    xhrRequest.abort() if xhrRequest
 
     onError = (jqXHR, status, error) ->
       if jqXHR.status is 500
@@ -538,7 +530,7 @@ makePublic = ->
         success: onSuccess
         type: 'PATCH'
         url: "#{Evercam.API_URL}cameras/#{Evercam.Camera.id}/archives/#{id}?api_id=#{Evercam.User.api_id}&api_key=#{Evercam.User.api_key}"
-      xhrRequestChangeMonth = $.ajax(settings)
+      xhrRequest = $.ajax(settings)
     else
       refresh_archive_table()
       Notification.warning("The comparisons are always public")

@@ -248,17 +248,11 @@ renderDuration = (type, from_date, to_date) ->
     formatted = hours + ' ' + minutes
     return formatted
 
-clickToCopy = ->
-  clipboard = new Clipboard('.copy-url-icon')
-  clipboard.on 'success', (e) ->
-    $('.bb-alert').width '100px'
-    Notification.show 'Copied!'
-
 window.initializePublicArchivesView = ->
   archive_js_player = videojs("archive-play")
   Notification.init(".bb-alert")
+  copyToClipboard(".copy-url-icon")
   initView()
   handleResize()
   download_file()
   onShare()
-  clickToCopy()
